@@ -1,12 +1,12 @@
-pagina="https://daddyyankee.com/"
-respuesta=`curl -s $pagina | grep -E -i '{{palabras clave a buscar separadas por '|' ej: daddy|yankee}}'`
-usuarios="{{listado de emails destino separados por ',' sin espacios}}"
+pagina="https://daddyyankee.com"
+respuesta=`curl -s $pagina | grep -E -i -B 4 'BUENOS AIRES, AR</span>' | grep 'href'`
+usuarios="{{hjcascante@gmail.com}}"
 hora=`date +%T`
 if [ -z "$respuesta" ]
 then
- echo "No hubo cambios $hora" >> {{nombre de archivo de log}}.log
-# echo "No hubo cambios en la pagina" | mail -s '{{asunto del mail}}' -c usuarios {{email del remitente}} 
+ echo "No hubo cambios $hora" >> daddylog.log
+ echo "No hubo cambios en la pagina" | mail -s '{{No hubo cambios}}' -c $usuarios {{email del remitente}} 
 else
- echo "hubo cambios en la pagina" >> {{nombre de archivo de log}}.log
- echo "AAH MIRÁ LA PAGINA DE DADDY YANKEE!!" | mail -s '{{asunto del mail}}' -c $usuarios {{email del remitente}}
+ echo "hubo cambios en la pagina" >> daddylog.log
+ echo "AAH MIRÁ LA PAGINA DE DADDY YANKEE!!" | mail -s '{{Hubo Cambios}}' -c $usuarios {{email del remitente}}
 fi
